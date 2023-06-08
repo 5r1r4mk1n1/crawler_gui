@@ -32,8 +32,8 @@ def fn1():
         if not os.path.exists("files/uncrawled.txt"):
             f=open("files/uncrawled.txt", "w+")
         else:
-            f=open("files/uncrawled.txt","r+",encoding='utf-8')
-        f.write(e1.get())
+            f=open("files/uncrawled.txt","a+",encoding='utf-8')
+        f.write(e1.get()+"\n")
         f.close()
         #put the message on text field on main window
         t1.insert(tk.END,"URL added sucessfully to uncrawled.txt\n")
@@ -49,31 +49,32 @@ def fn2():
     ws = root.winfo_screenwidth() # width of the screen
     hs = root.winfo_screenheight() # height of the screen
     x = (ws/2) - (350/2)
-    y = (hs/2) - (150/2)
-    w2.geometry("350x150+%d+%d" % (x,y))
+    y = (hs/2) - (180/2)
+    w2.geometry("350x180+%d+%d" % (x,y))
     w2.title("Add restrictions")
-    l1=ctk.CTkLabel(w2,text="Add text to match in urls. Empty if no restrictions")
-    l1.grid(row=0,column=0,padx=20,pady=5)
-    e1 = ctk.CTkEntry(w2)
+    e1 = ctk.CTkEntry(w2,placeholder_text="Pattern to match in URLs")
     w2.grid_columnconfigure(0,weight=1)
-    e1.grid(row=1,column=0,sticky='ew',padx=30)
+    e1.grid(row=0,column=0,sticky='ew',padx=30,pady=10)
     e2 = ctk.CTkEntry(w2,placeholder_text="No of threads")
-    e2.grid(row=2,column=0,sticky='ew',padx=30,pady=10)
+    e2.grid(row=1,column=0,sticky='ew',padx=30,pady=10)
+    e3 = ctk.CTkEntry(w2,placeholder_text="No of iterations")
+    e3.grid(row=2,column=0,sticky='ew',padx=30,pady=10)
     #function when crawl button is clicked
     def ffn1():
         text = e1.get()
         no= 2 if e2.get()=="" else int(e2.get())#set default threads to 2 if not entered
+        itr= 1 if e3.get()=="" else int(e3.get())#no of iterations, default 1
         #destroy the child window
         w2.destroy()
         #clear the t1 textfield and add message
         t1.delete(0.0,tk.END)
         t1.insert(tk.END,"Crawling...")
         #start ffn2 function as a new thread. If thread is not created main window shows not responding as it has to wait for function to complete executing for long time.
-        threading.Thread(target=ffn2,args=(text,no)).start()
+        threading.Thread(target=ffn2,args=(text,no,itr)).start()
     #function which executed crawler.py in files folder with restriction and no of threads as arguments, written in seperate ffn2 so that it can be executed as a thread.
-    def ffn2(text,no):
+    def ffn2(text,no,itr):
         #returns a string containing all the messages appended into it during execution, and after execution writes it into text field t1 in main window.
-        out = ncrawl.new(text,no)
+        out = ncrawl.new(text,no,itr)
         t1.insert(tk.END,out)   
         
 
@@ -116,7 +117,7 @@ def fn7():
     w3.title("Extract article")
     e1 = ctk.CTkEntry(w3)
     w3.grid_columnconfigure(0,weight=1)
-    e1.grid(row=1,column=0,sticky='ew',padx=30,pady=10)
+    e1.grid(row=1,column=0,sticky='ew',padx=30,pady=8)
     def ex():
         url=str(e1.get())
         w3.destroy()
@@ -137,16 +138,17 @@ def fn8():
         t1.insert(tk.END,out)
     threading.Thread(target=ffn1).start()
 
-#create main window
+#create main windowa
 root= ctk.CTk()
 root.title("Crawler")
-ws1 = root.winfo_screenwidth()
-hs1 = root.winfo_screenheight()
-w=700
-h=450
-x1 = (ws1//2) - (w//2)
-y1 = (hs1//2) - (h//2)
-root.geometry("%dx%d+%d+%d" % (w,h,x1,y1))
+# ws1 = root.winfo_screenwidth()
+# hs1 = root.winfo_screenheight()
+# w=700
+# h=450
+# x1 = (ws1//2) - (w//2)
+# y1 = (hs1//2) - (h//2)
+# root.geometry("%dx%d+%d+%d" % (w,h,x1,y1))
+root.geometry("700x450")
 #create a frame where all buttons are added
 f3 = ctk.CTkFrame(root)
 btn1= ctk.CTkButton(f3,text="Add seed urls",command=fn1)

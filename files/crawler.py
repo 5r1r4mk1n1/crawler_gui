@@ -7,7 +7,7 @@ import os
 import re
 
 #crawls all files in uncrawled.txt if texxt is "" adds all obtained links to uncrawled and all uncrawled links to crawled.txt. If not "" checks all crawled urls and adds only links containing texxt to uncrawled. Second argument is no of threads.
-def new(texxt,no):
+def new(texxt,no,itr):
     try:
         #output string which stores all messages and returns it
         output=""
@@ -55,17 +55,20 @@ def new(texxt,no):
                     lock.release()
 
         #create thread pool with no threads and submit crawl function with arguments to that many threads at a time. wait for it to complete.
-        executor = ThreadPoolExecutor(max_workers=no)
-        for url in uncrawled:
-            executor.submit(crawl,url, temp)
-        executor.shutdown(wait=True)
-        #add content of uncrawled to crawled set, set uncrawled as temp and empty temp.
-        n=len(uncrawled)
-        crawled.update(uncrawled)
-        uncrawled=temp
-        temp=set()
-        output+=str(len(uncrawled))+" links obtained from "+str(n)+" sites.\n"
-        output+="Total links crawled: "+str(len(crawled))+"\n"
+        
+
+        for i in range(itr):
+            executor = ThreadPoolExecutor(max_workers=no)
+            for url in uncrawled:
+                executor.submit(crawl,url, temp)
+            executor.shutdown(wait=True)
+            #add content of uncrawled to crawled set, set uncrawled as temp and empty temp.
+            n=len(uncrawled)
+            crawled.update(uncrawled)
+            uncrawled=temp
+            temp=set()
+            output+=str(len(uncrawled))+" links obtained from "+str(n)+" sites.\n"
+            output+="Total links crawled: "+str(len(crawled))+"\n"
         #update content of sets to their respective txt files.
         for i in crawled:
             if i!=None:
@@ -85,7 +88,7 @@ def new(texxt,no):
         uncrawled_txt.close()
         crawled_txt.close()
     except:
-        return -1
+        return "\nError occured.\n"
     output+="\nOperation completed.\n"
     return output
     
