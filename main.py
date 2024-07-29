@@ -6,7 +6,7 @@ import files.crawler as ncrawl
 #import getarticle.py from files folder
 import files.getarticle as getarticle
 import os
-
+from PIL import Image
 #function for button 1
 def fn1():
     #create a new window
@@ -148,7 +148,7 @@ root.title("Crawler")
 # x1 = (ws1//2) - (w//2)
 # y1 = (hs1//2) - (h//2)
 # root.geometry("%dx%d+%d+%d" % (w,h,x1,y1))
-root.geometry("700x450")
+root.geometry("700x500")
 #create a frame where all buttons are added
 f3 = ctk.CTkFrame(root)
 btn1= ctk.CTkButton(f3,text="Add seed urls",command=fn1)
@@ -173,14 +173,95 @@ btn7.grid(row=1,column=3,pady=10,padx=10)
 btn8= ctk.CTkButton(f3,text="Extract all article",command=fn8)
 btn8.grid(row=2,column=3,pady=10,padx=10)
 
+def about():
+    window = ctk.CTkToplevel(root)
+    window.attributes("-topmost",True)
+    window.geometry("700x580")
+    window.title("About")
+    f1=ctk.CTkFrame(window,fg_color='transparent')
+    f1.grid(row=1,column=0,padx=30)
+    f2=ctk.CTkFrame(window,fg_color='transparent')
+    f2.grid(row=2,column=0,sticky='nsew')
+    my_image1 = ctk.CTkImage(light_image=Image.open("files\img1.jpg"),
+                                  dark_image=Image.open("files\img1.jpg"),
+                                  size=(80, 100))
+    image_label1 = ctk.CTkLabel(f1, image=my_image1, text="")
+    my_image2 = ctk.CTkImage(light_image=Image.open("files\img2.jpg"),
+                                  dark_image=Image.open("files\img2.jpg"),
+                                  size=(80, 100))
+    image_label2 = ctk.CTkLabel(f1, image=my_image2, text="")
+    my_image3 = ctk.CTkImage(light_image=Image.open("files\img3.jpg"),
+                                  dark_image=Image.open("files\img3.jpg"),
+                                  size=(80, 100))
+    image_label3 = ctk.CTkLabel(f1, image=my_image3, text="")
+    my_image4 = ctk.CTkImage(light_image=Image.open("files\img4.jpg"),
+                                  dark_image=Image.open("files\img4.jpg"),
+                                  size=(80, 100))
+    image_label4 = ctk.CTkLabel(f1, image=my_image4, text="")
+    image_label1.grid(column=0,row=1,padx=25,pady=10,sticky='e')
+    image_label2.grid(column=1,row=1,padx=25,pady=10,sticky='e')
+    image_label3.grid(column=2,row=1,padx=25,pady=10,sticky='e')
+    image_label4.grid(column=3,row=1,padx=25,pady=10,sticky='e')
+    l2=ctk.CTkLabel(f1,text="Sriram Kini",font=("Roboto Medium", 12))
+    l2.grid(row=2,column=0,sticky='e',padx=35,pady=0)
+    l22=ctk.CTkLabel(f1,text="4NM21CS170",font=("Roboto Medium", 12))
+    l22.grid(row=3,column=0,sticky='e',padx=30,pady=0)
 
-f3.grid(row=0,column=0,pady=20)
+    l3=ctk.CTkLabel(f1,text="Sudesh Nayak",font=("Roboto Medium", 12))
+    l3.grid(row=2,column=1,sticky='e',padx=25,pady=0)
+    l32=ctk.CTkLabel(f1,text="4NM21CS175",font=("Roboto Medium", 12))
+    l32.grid(row=3,column=1,sticky='e',padx=25,pady=0)
+
+    l3=ctk.CTkLabel(f1,text="Thushar",font=("Roboto Medium", 12))
+    l3.grid(row=2,column=2,sticky='e',padx=45,pady=0)
+    l32=ctk.CTkLabel(f1,text="4NM21CS193",font=("Roboto Medium", 12))
+    l32.grid(row=3,column=2,sticky='e',padx=30,pady=0)
+    l4=ctk.CTkLabel(f1,text="Yasir Manzoor Sheikh",font=("Roboto Medium", 12))
+    l4.grid(row=2,column=3,sticky='e',padx=30,pady=0,columnspan=2)
+    l42=ctk.CTkLabel(f1,text="4NM21CS215",font=("Roboto Medium", 12))
+    l42.grid(row=3,column=3,sticky='e',padx=50,pady=0,columnspan=2)
+    l5=ctk.CTkLabel(f2,text="Under the guidance of,",font=("Roboto Medium", 14))
+    l5.grid(row=0,column=0,sticky='w',padx=10,pady=(15,0))
+    l6=ctk.CTkLabel(f2,text="Dr. Radhakrishna Associate Professor, Dept. of Comp. Science & Eng. NMAM Inst. of Technology,",font=("Roboto Medium", 14))
+    l6.grid(row=1,column=0,padx=60,pady=0)
+
+    l7=ctk.CTkLabel(f2,text="Nitte, .As part of internship - II activity (April 2023).",font=("Roboto Medium", 14))
+    l7.grid(row=2,column=0,sticky='w',padx=10,pady=0)
+
+    l8=ctk.CTkLabel(f2,text="It involves a GUI for crawler application.")
+    l8.grid(row=3,column=0,padx=10,sticky='w',pady=0)
+    l9=ctk.CTkLabel(f2,text="Functionalities: ")
+    l9.grid(row=4,column=0,sticky='w',padx=10,pady=0)
+
+    l10=ctk.CTkLabel(f2,text="- Add seed urls: Add initial urls to uncrawled list of urls.")
+    l10.grid(row=5,column=0,sticky='w',padx=10,pady=0)
+
+    l11=ctk.CTkLabel(f2,text="- Crawl: Crawl all the urls in uncrawled list")
+    l11.grid(row=6,column=0,sticky='w',padx=10,pady=0)
+    l12=ctk.CTkLabel(f2,text="- Clear uncrawled/crawled: clear uncrawled/crawled list")
+    l12.grid(row=7,column=0,sticky='w',padx=10,pady=0)
+    l13=ctk.CTkLabel(f2,text="- View crawled/uncrawled: View crawled/uncrawled list")
+    l13.grid(row=8,column=0,sticky='w',padx=10,pady=0)
+    l14=ctk.CTkLabel(f2,text="- Extract article: Extract article from given link and store in Articles folder")
+    l14.grid(row=9,column=0,sticky='w',padx=10,pady=0)
+    l15=ctk.CTkLabel(f2,text="- Extract all: Extract articles of links in crawled and store in Articles folder")
+    l15.grid(row=10,column=0,sticky='w',padx=10,pady=0)
+    l1=ctk.CTkLabel(window,text="This project was made by,",font=("Roboto Medium", 14))
+    l1.grid(row=0,column=0,sticky='w',padx=10,pady=10)
+
+
+btn5=ctk.CTkButton(root,text="Crawler",font=("Roboto Medium", -16),fg_color='#2b2b2b',border_color='#343638',border_width=1,border_spacing=8,command=about)
+btn5.grid(row=0,column=0,padx=10,pady=(10,0))
+
+
+
+f3.grid(row=1,column=0,pady=(5,20))
 
 #create a 2nd frame to place text field t1 where all outputs are shown.
 f2=ctk.CTkFrame(root)
 root.grid_rowconfigure(1,weight=1)
 root.grid_columnconfigure(0,weight=1)
-f2.grid(row=1,column=0,sticky='nsew',padx=30,pady=30)
+f2.grid(row=2,column=0,sticky='nsew',padx=30,pady=(0,30))
 
 t1=ctk.CTkTextbox(f2)
 t1.insert(tk.END,"")
